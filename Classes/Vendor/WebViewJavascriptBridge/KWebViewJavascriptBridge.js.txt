@@ -1,0 +1,114 @@
+;(function() {
+	if (window.wvjb) { return }
+	var sendMessageQueue = []
+	var receiveMessageQueue = []
+	var messageHandlers = {}
+	
+	var CUSTOM_PROTOCOL_SCHEME = 'ccwvjbscheme'
+	var QUEUE_HAS_MESSAGE = '__CCWVJB_QUEUE_MESSAGE__'
+	
+	var responseCallbacks = {}
+	var uniqueId = 1
+	
+	function registerHandler(handlerName, handler) {
+		messageHandlers[handlerName] = handler
+	}
+	
+	function callHandler(handlerName, data, responseCallback) {
+		_doSend({ handlerName:handlerName, data:data }, responseCallback)
+	}
+	
+	function _doSend(message, responseCallback) {
+		if (responseCallback) {
+			var callbackId = 'cb_'+(uniqueId++)+'_'+new Date().getTime()
+			responseCallbacks[callbackId] = responseCallback
+			message['callbackId'] = callbackId
+		}
+		sendMessageQueue.push(message)
+        if (/complete|loaded|interactive/.test(document.readyState) && document.body) {
+            window.location = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE
+        } else {
+            document.addEventListener('DOMContentLoaded', function () {
+                window.location = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE
+            }, false)
+        }
+	}
+
+	function _fetchQueue(flag) {
+		var messageQueueString = JSON.stringify(sendMessageQueue)
+		sendMessageQueue = []
+		if (flag) {
+			window.wvjbb.callback(messageQueueString)
+		} else {
+			return messageQueueString
+		}
+	}
+
+	function _dispatchMessageFromObjC(messageJSON) {
+		setTimeout(function _timeoutDispatchMessageFromObjC() {
+			var message = JSON.parse(messageJSON)
+			var messageHandler
+			
+			if (message.responseId) {
+				var responseCallback = responseCallbacks[message.responseId]
+				if (!responseCallback) { return; }
+				responseCallback(message.responseData)
+				delete responseCallbacks[message.responseId]
+			} else {
+				var responseCallback
+				if (message.callbackId) {
+					var callbackResponseId = message.callbackId
+					responseCallback = function(responseData) {
+						_doSend({ responseId:callbackResponseId, responseData:responseData })
+					}
+				}
+				
+				var handler 
+				if (message.handlerName) {
+					handler = messageHandlers[message.handlerName]
+				}
+				if (!handler) {
+					handler = wvjb._notFoundHandler
+				}
+				
+				try {
+					handler(message.data, responseCallback)
+				} catch(exception) {
+					if (typeof console != 'undefined') {
+						console.log("wvjb: WARNING: javascript handler threw.", message, exception)
+					}
+				}
+			}
+		})
+	}
+	
+	function _handleMessageFromObjC(messageJSON) {
+		if (receiveMessageQueue) {
+			receiveMessageQueue.push(messageJSON)
+		} else {
+			_dispatchMessageFromObjC(messageJSON)
+		}
+	}
+
+	window.wvjb = {
+		registerHandler: registerHandler,
+		callHandler: callHandler,
+		_fetchQueue: _fetchQueue,
+		_handleMessageFromObjC: _handleMessageFromObjC
+	}
+
+	var doc = document
+	var readyEvent = doc.createEvent('Events')
+	readyEvent.initEvent('WVJBReady')
+	readyEvent.bridge = wvjb
+	doc.dispatchEvent(readyEvent)
+
+	wvjb._notFoundHandler = function(message, responseCallback) {
+		responseCallback({status:{code:404}})
+	}
+	var receivedMessages = receiveMessageQueue
+	receiveMessageQueue = null
+	for (var i=0; i<receivedMessages.length; i++) {
+		_dispatchMessageFromObjC(receivedMessages[i])
+	}
+})();

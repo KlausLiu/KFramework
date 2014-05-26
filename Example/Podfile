@@ -1,12 +1,6 @@
-# Uncomment this line to define a global platform for your project
-# platform :ios, '7.0'
+platform :ios
 
-target "Demo" do
-  pod "KFramework", :path => "../"
-end
+# ignore all warnings from all pods
+inhibit_all_warnings!
 
-# Uncomment the following lines to add testing dependencies
-# target "DemoTests" do
-#   pod 'Expecta'
-# end
-
+pod "KFramework", :path => "../KFramework.podspec"

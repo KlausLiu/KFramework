@@ -1,0 +1,54 @@
+PODS:
+  - ASIHTTPRequest (1.8.2):
+    - ASIHTTPRequest/ASIWebPageRequest
+    - ASIHTTPRequest/CloudFiles
+    - ASIHTTPRequest/Core
+    - ASIHTTPRequest/S3
+  - ASIHTTPRequest/ASIWebPageRequest (1.8.2):
+    - ASIHTTPRequest/Core
+  - ASIHTTPRequest/CloudFiles (1.8.2):
+    - ASIHTTPRequest/Core
+  - ASIHTTPRequest/Core (1.8.2):
+    - Reachability
+  - ASIHTTPRequest/S3 (1.8.2):
+    - ASIHTTPRequest/Core
+  - FMDB (2.3):
+    - FMDB/standard
+  - FMDB/common (2.3)
+  - FMDB/standard (2.3):
+    - FMDB/common
+  - KFramework (0.0.5):
+    - KFramework/Base64
+    - KFramework/Core
+    - KFramework/IdentifierAddition
+    - KFramework/JSONKit
+    - KFramework/WebViewJavascriptBridge
+  - KFramework/Base64 (0.0.5)
+  - KFramework/Core (0.0.5):
+    - ASIHTTPRequest
+    - FMDB
+    - KFramework/Base64
+    - KFramework/JSONKit
+    - OpenUDID
+    - Reachability
+  - KFramework/IdentifierAddition (0.0.5)
+  - KFramework/JSONKit (0.0.5)
+  - KFramework/WebViewJavascriptBridge (0.0.5)
+  - OpenUDID (1.0.0)
+  - Reachability (3.1.1)
+
+DEPENDENCIES:
+  - KFramework (from `../KFramework.podspec`)
+
+EXTERNAL SOURCES:
+  KFramework:
+    :path: ../KFramework.podspec
+
+SPEC CHECKSUMS:
+  ASIHTTPRequest: 2c8335b49410c0e2ad42829c438e74d454b77590
+  FMDB: 31ec26773c7f7b7890a6038235a1f2bbd933a7cb
+  KFramework: 496dea2091ad9b3bc9565f091fd5623fd13ce115
+  OpenUDID: 5a23b7477755efc2d7871b57aa79ba3089c40b74
+  Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
+
+COCOAPODS: 0.32.1
