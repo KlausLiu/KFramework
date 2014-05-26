@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "KFramework"
-  s.version          = "0.0.5"
+  s.version          = "0.0.1"
   s.summary          = "Klaus Framework."
   s.description      = <<-DESC
                        MVC Framework.
