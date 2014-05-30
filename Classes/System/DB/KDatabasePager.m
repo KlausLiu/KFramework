@@ -42,7 +42,7 @@
     pager.pageNumber = pageNumber;
     pager.pageSize = pageSize;
     pager.recordCount = recordCount;
-    return KAutoRelease(pager);
+    return K_Auto_Release(pager);
 }
 
 - (instancetype) resetPageCount

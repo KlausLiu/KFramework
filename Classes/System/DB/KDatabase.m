@@ -18,7 +18,7 @@
     dispatch_queue_t _lockQueue;
 }
 
-@property (nonatomic, strong) FMDatabaseQueue * dbQueue;
+@property (nonatomic, K_Strong) FMDatabaseQueue * dbQueue;
 
 @end
 
@@ -32,7 +32,7 @@ static NSMutableArray *_checkedTableNameArray = nil;
 
 + (instancetype) databaseWithFilePath:(NSString *)filePath
 {
-    return KAutoRelease([[self alloc] initWithFilePath:filePath]);
+    return K_Auto_Release([[self alloc] initWithFilePath:filePath]);
 }
 
 - (instancetype) initWithFilePath:(NSString *)filePath
@@ -46,8 +46,8 @@ static NSMutableArray *_checkedTableNameArray = nil;
 
 - (void) dealloc
 {
-    KRelease(self.dbQueue);
-    KDispatchQueueRelease(_lockQueue);
+    K_Release(self.dbQueue);
+    K_Dispatch_Queue_Release(_lockQueue);
     
 #if !__has_feature(objc_arc)
     [super dealloc];
@@ -965,7 +965,7 @@ static NSMutableArray *_checkedTableNameArray = nil;
                                                   inClass:[inObject class]];
     id idValue = [inObject valueForKey:pk];
     Class objectClass = [KClassUtils classWithPropertyName:propertyName inClass:[inObject class]];
-    NSString *tName = KAutoRelease(KRetain([self __tableNameWithClass:objectClass]));
+    NSString *tName = K_Auto_Release(K_Retain([self __tableNameWithClass:objectClass]));
     NSString *one2oneColumnName = [[self class] one2oneIdColumnNameForPropertyName:propertyName
                                                                            inClass:[inObject class]];
     FMResultSet *rs = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@=%@",
@@ -1010,7 +1010,7 @@ static NSMutableArray *_checkedTableNameArray = nil;
     NSString *pk = [[self class] primaryKeyForClass:inClass];
     KClassType idType = [KClassUtils typeWithPropertyName:pk
                                                   inClass:inClass];
-    NSString *tName = KAutoRelease(KRetain([self __tableNameWithClass:class]));
+    NSString *tName = K_Auto_Release(K_Retain([self __tableNameWithClass:class]));
     NSString *one2oneColumnName = [[self class] one2oneIdColumnNameForPropertyName:propertyName
                                                                            inClass:inClass];
     return [db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@ WHERE %@=%@",
@@ -1069,7 +1069,7 @@ static NSMutableArray *_checkedTableNameArray = nil;
                             inObject:(id)inObject
                                   db:(FMDatabase *)db
 {
-    NSString *tableName = KRetain([self __tableNameWithClass:[obj class]]);
+    NSString *tableName = K_Retain([self __tableNameWithClass:[obj class]]);
     if (![_checkedTableNameArray containsObject:tableName]) {
         [_checkedTableNameArray addObject:tableName];
         [self __checkTableWithObject:obj
@@ -1077,7 +1077,7 @@ static NSMutableArray *_checkedTableNameArray = nil;
                             inObject:inObject
                                   db:db];
     }
-    return KAutoRelease(tableName);
+    return K_Auto_Release(tableName);
 }
 
 #pragma mark other
@@ -1169,13 +1169,13 @@ static NSMutableArray *_checkedTableNameArray = nil;
 - (NSString *) tableNameWithObject:(id)obj
                                 db:(FMDatabase *)db
 {
-    NSString *tableName = KRetain([self __tableNameWithClass:[obj class]]);
+    NSString *tableName = K_Retain([self __tableNameWithClass:[obj class]]);
     if (![_checkedTableNameArray containsObject:tableName]) {
         [_checkedTableNameArray addObject:tableName];
         [self __checkTableWithObject:obj
                                   db:db];
     }
-    return KAutoRelease(tableName);
+    return K_Auto_Release(tableName);
 }
 
 /**
@@ -1275,7 +1275,7 @@ static NSMutableArray *_checkedTableNameArray = nil;
         }
         // TODO 通知出去
         
-        KRelease(_unExistsColumnNames);
+        K_Release(_unExistsColumnNames);
         if ([[obj class] respondsToSelector:@selector(kdb_auto_sync_property_column)]) {
             NSMutableArray *_deletedColumnNames = [[NSMutableArray alloc] initWithArray:cs[1]];
             for (NSString *columnName in _deletedColumnNames) {
@@ -1284,7 +1284,7 @@ static NSMutableArray *_checkedTableNameArray = nil;
             }
             // TODO 通知出去
             
-            KRelease(_deletedColumnNames);
+            K_Release(_deletedColumnNames);
         }
     }
 }

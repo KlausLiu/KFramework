@@ -58,37 +58,49 @@
 #define COCOAPODS_POD_AVAILABLE_KFramework
 #define COCOAPODS_VERSION_MAJOR_KFramework 0
 #define COCOAPODS_VERSION_MINOR_KFramework 0
-#define COCOAPODS_VERSION_PATCH_KFramework 5
+#define COCOAPODS_VERSION_PATCH_KFramework 1
 
 // KFramework/Base64
 #define COCOAPODS_POD_AVAILABLE_KFramework_Base64
 #define COCOAPODS_VERSION_MAJOR_KFramework_Base64 0
 #define COCOAPODS_VERSION_MINOR_KFramework_Base64 0
-#define COCOAPODS_VERSION_PATCH_KFramework_Base64 5
+#define COCOAPODS_VERSION_PATCH_KFramework_Base64 1
+
+// KFramework/Categories
+#define COCOAPODS_POD_AVAILABLE_KFramework_Categories
+#define COCOAPODS_VERSION_MAJOR_KFramework_Categories 0
+#define COCOAPODS_VERSION_MINOR_KFramework_Categories 0
+#define COCOAPODS_VERSION_PATCH_KFramework_Categories 1
 
 // KFramework/Core
 #define COCOAPODS_POD_AVAILABLE_KFramework_Core
 #define COCOAPODS_VERSION_MAJOR_KFramework_Core 0
 #define COCOAPODS_VERSION_MINOR_KFramework_Core 0
-#define COCOAPODS_VERSION_PATCH_KFramework_Core 5
+#define COCOAPODS_VERSION_PATCH_KFramework_Core 1
+
+// KFramework/DB
+#define COCOAPODS_POD_AVAILABLE_KFramework_DB
+#define COCOAPODS_VERSION_MAJOR_KFramework_DB 0
+#define COCOAPODS_VERSION_MINOR_KFramework_DB 0
+#define COCOAPODS_VERSION_PATCH_KFramework_DB 1
 
 // KFramework/IdentifierAddition
 #define COCOAPODS_POD_AVAILABLE_KFramework_IdentifierAddition
 #define COCOAPODS_VERSION_MAJOR_KFramework_IdentifierAddition 0
 #define COCOAPODS_VERSION_MINOR_KFramework_IdentifierAddition 0
-#define COCOAPODS_VERSION_PATCH_KFramework_IdentifierAddition 5
+#define COCOAPODS_VERSION_PATCH_KFramework_IdentifierAddition 1
 
 // KFramework/JSONKit
 #define COCOAPODS_POD_AVAILABLE_KFramework_JSONKit
 #define COCOAPODS_VERSION_MAJOR_KFramework_JSONKit 0
 #define COCOAPODS_VERSION_MINOR_KFramework_JSONKit 0
-#define COCOAPODS_VERSION_PATCH_KFramework_JSONKit 5
+#define COCOAPODS_VERSION_PATCH_KFramework_JSONKit 1
 
 // KFramework/WebViewJavascriptBridge
 #define COCOAPODS_POD_AVAILABLE_KFramework_WebViewJavascriptBridge
 #define COCOAPODS_VERSION_MAJOR_KFramework_WebViewJavascriptBridge 0
 #define COCOAPODS_VERSION_MINOR_KFramework_WebViewJavascriptBridge 0
-#define COCOAPODS_VERSION_PATCH_KFramework_WebViewJavascriptBridge 5
+#define COCOAPODS_VERSION_PATCH_KFramework_WebViewJavascriptBridge 1
 
 // OpenUDID
 #define COCOAPODS_POD_AVAILABLE_OpenUDID

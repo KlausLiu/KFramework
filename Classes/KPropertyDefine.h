@@ -9,7 +9,7 @@
 #ifndef Pods_KPropertyDefine_h
 #define Pods_KPropertyDefine_h
 
-#ifndef KRetain
+#ifndef K_Retain
 #include "KDefine.h"
 #endif
 
@@ -23,7 +23,7 @@
     { \
         static NSString * _action_url_ = nil; \
         if (_action_url_ == nil) { \
-            _action_url_ = KCopy(__action_url); \
+            _action_url_ = K_Copy(__action_url); \
         } \
         return _action_url_;\
     }

@@ -171,7 +171,7 @@
         free(properties);
     }
     
-    return KAutoRelease(object);
+    return K_Auto_Release(object);
 }
 
 @end
@@ -262,7 +262,7 @@
 	else if ( [self isKindOfClass:[NSData class]] )
 	{
 		NSData * data = (NSData *)self;
-		return KAutoRelease([[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding]);
+		return K_Auto_Release([[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding]);
 	}
 	else
 	{
@@ -288,7 +288,7 @@
 			[formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
             
 			date = [formatter dateFromString:(NSString *)self];
-            KRelease(formatter);
+            K_Release(formatter);
 		}
         
 		if ( nil == date )
@@ -299,7 +299,7 @@
 			[formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
 			
 			date = [formatter dateFromString:(NSString *)self];
-            KRelease(formatter);
+            K_Release(formatter);
 		}
         
 		if ( nil == date )
@@ -310,7 +310,7 @@
 			[formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
 			
 			date = [formatter dateFromString:(NSString *)self];
-            KRelease(formatter);
+            K_Release(formatter);
 		}
         
 		if ( nil == date )
@@ -321,7 +321,7 @@
 			[formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
 			
 			date = [formatter dateFromString:(NSString *)self];
-            KRelease(formatter);
+            K_Release(formatter);
 		}
         
 		return date;

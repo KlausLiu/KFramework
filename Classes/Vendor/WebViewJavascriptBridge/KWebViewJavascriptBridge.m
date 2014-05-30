@@ -64,7 +64,7 @@ static bool logging = false;
     KWebViewJavascriptBridge *bridge = [[KWebViewJavascriptBridge alloc] init];
     [bridge _platformSpecificSetup:webView webViewDelegate:webViewDelegate handler:handler];
     [bridge reset];
-    return KAutoRelease(bridge);
+    return K_Auto_Release(bridge);
 }
 
 - (void) registerHandler:(NSString*)handlerName
@@ -237,7 +237,7 @@ static bool logging = false;
 - (NSString *) _serializeMessage:(KWVJBMessage *)message
 {
     if (NSClassFromString(@"NSJSONSerialization")) {
-        return KAutoRelease([[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:message
+        return K_Auto_Release([[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:message
                                                                                               options:0
                                                                                                 error:nil]
                                                      encoding:NSUTF8StringEncoding]);

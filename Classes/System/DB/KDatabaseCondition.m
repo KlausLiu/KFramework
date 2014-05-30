@@ -17,9 +17,9 @@ typedef NS_ENUM(NSInteger, KDatabaseLogic) {
 
 @interface KDatabaseWhereInfo : NSObject
 
-@property (nonatomic, strong) NSString *        name;
+@property (nonatomic, K_Strong) NSString *        name;
 @property (nonatomic, assign) KDatabaseOperate  op;
-@property (nonatomic, strong) id                arg;
+@property (nonatomic, K_Strong) id                arg;
 @property (nonatomic, assign) KDatabaseLogic    logic;
 
 + (instancetype) whereInfoWithName:(NSString *)name
@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, KDatabaseLogic) {
 
 @interface KDatabaseOrderByInfo : NSObject
 
-@property (nonatomic, strong) NSString *            name;
+@property (nonatomic, K_Strong) NSString *            name;
 @property (nonatomic, assign) KDatabaseOrderBySort  sort;
 
 + (instancetype) orderByInfoWithName:(NSString *)name
@@ -41,9 +41,9 @@ typedef NS_ENUM(NSInteger, KDatabaseLogic) {
 
 @interface KDatabaseCondition ()
 
-@property (nonatomic, strong) NSMutableArray *whereInfos;
+@property (nonatomic, K_Strong) NSMutableArray *whereInfos;
 
-@property (nonatomic, strong) NSMutableArray *orderByInfos;
+@property (nonatomic, K_Strong) NSMutableArray *orderByInfos;
 
 @property (nonatomic, assign) Class cdnOfClass;
 
@@ -63,8 +63,8 @@ typedef NS_ENUM(NSInteger, KDatabaseLogic) {
 
 - (void) dealloc
 {
-    KRelease(self.whereInfos);
-    KRelease(self.orderByInfos);
+    K_Release(self.whereInfos);
+    K_Release(self.orderByInfos);
     
 #if !__has_feature(objc_arc)
     [super dealloc];
@@ -74,14 +74,14 @@ typedef NS_ENUM(NSInteger, KDatabaseLogic) {
 + (KDataBaseWhereBlock) where
 {
     KDataBaseWhereBlock block = ^ KDatabaseCondition *(NSString *name, KDatabaseOperate op, id value) {
-        KDatabaseCondition *cdn = KAutoRelease([[KDatabaseCondition alloc] init]);
+        KDatabaseCondition *cdn = K_Auto_Release([[KDatabaseCondition alloc] init]);
         [cdn __expWithName:name
                         op:op
                      value:value
                      logic:KDatabaseLogic_And];
         return cdn;
     };
-    return KAutoRelease([block copy]);
+    return K_Auto_Release([block copy]);
 }
 
 - (KDataBaseWhereBlock) and
@@ -93,7 +93,7 @@ typedef NS_ENUM(NSInteger, KDatabaseLogic) {
                      logic:KDatabaseLogic_And];
         return self;
     };
-    return KAutoRelease([block copy]);
+    return K_Auto_Release([block copy]);
 }
 
 - (KDataBaseWhereBlock) or
@@ -105,7 +105,7 @@ typedef NS_ENUM(NSInteger, KDatabaseLogic) {
                       logic:KDatabaseLogic_Or];
         return self;
     };
-    return KAutoRelease([block copy]);
+    return K_Auto_Release([block copy]);
 }
 
 - (instancetype) orderByName:(NSString *)name
@@ -128,7 +128,7 @@ typedef NS_ENUM(NSInteger, KDatabaseLogic) {
         self.cdnOfClass = class;
         return self;
     };
-    return KAutoRelease([block copy]);
+    return K_Auto_Release([block copy]);
 }
 
 - (NSString *) toSql
@@ -273,13 +273,13 @@ typedef NS_ENUM(NSInteger, KDatabaseLogic) {
     whereInfo.op = op;
     whereInfo.arg = arg;
     whereInfo.logic = logic;
-    return KAutoRelease(whereInfo);
+    return K_Auto_Release(whereInfo);
 }
 
 - (void)dealloc
 {
-    KRelease(self.name);
-    KRelease(self.arg);
+    K_Release(self.name);
+    K_Release(self.arg);
     
 #if !__has_feature(objc_arc)
     [super dealloc];
@@ -296,12 +296,12 @@ typedef NS_ENUM(NSInteger, KDatabaseLogic) {
     KDatabaseOrderByInfo *whereInfo = [[KDatabaseOrderByInfo alloc] init];
     whereInfo.name = name;
     whereInfo.sort = sort;
-    return KAutoRelease(whereInfo);
+    return K_Auto_Release(whereInfo);
 }
 
 - (void)dealloc
 {
-    KRelease(self.name);
+    K_Release(self.name);
     
 #if !__has_feature(objc_arc)
     [super dealloc];

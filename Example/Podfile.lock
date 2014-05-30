@@ -17,23 +17,30 @@ PODS:
   - FMDB/common (2.3)
   - FMDB/standard (2.3):
     - FMDB/common
-  - KFramework (0.0.5):
+  - KFramework (0.0.1):
     - KFramework/Base64
+    - KFramework/Categories
     - KFramework/Core
+    - KFramework/DB
     - KFramework/IdentifierAddition
     - KFramework/JSONKit
     - KFramework/WebViewJavascriptBridge
-  - KFramework/Base64 (0.0.5)
-  - KFramework/Core (0.0.5):
+  - KFramework/Base64 (0.0.1)
+  - KFramework/Categories (0.0.1):
+    - KFramework/JSONKit
+  - KFramework/Core (0.0.1):
     - ASIHTTPRequest
-    - FMDB
     - KFramework/Base64
+    - KFramework/Categories
     - KFramework/JSONKit
     - OpenUDID
     - Reachability
-  - KFramework/IdentifierAddition (0.0.5)
-  - KFramework/JSONKit (0.0.5)
-  - KFramework/WebViewJavascriptBridge (0.0.5)
+  - KFramework/DB (0.0.1):
+    - FMDB
+    - KFramework/Categories
+  - KFramework/IdentifierAddition (0.0.1)
+  - KFramework/JSONKit (0.0.1)
+  - KFramework/WebViewJavascriptBridge (0.0.1)
   - OpenUDID (1.0.0)
   - Reachability (3.1.1)
 
@@ -47,7 +54,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   ASIHTTPRequest: 2c8335b49410c0e2ad42829c438e74d454b77590
   FMDB: 31ec26773c7f7b7890a6038235a1f2bbd933a7cb
-  KFramework: 496dea2091ad9b3bc9565f091fd5623fd13ce115
+  KFramework: 0466a7a194ebdd91028b83b62b337eeca464af51
   OpenUDID: 5a23b7477755efc2d7871b57aa79ba3089c40b74
   Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
 

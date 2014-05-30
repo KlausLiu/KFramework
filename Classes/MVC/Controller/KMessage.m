@@ -8,7 +8,6 @@
 
 #import "KMessage.h"
 #import "ASIFormDataRequest.h"
-#import "KDefine.h"
 #import "KCategories.h"
 
 #define CORP_MESSAGE_TIME_OUT_SECONDS_DEFAULT    (30)
@@ -21,24 +20,24 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
 };
 
 @interface FileParam : NSObject
-@property (nonatomic, strong) NSString *            filePath;
-@property (nonatomic, strong) NSData *              fileData;
-@property (nonatomic, strong) NSString *            fileName;
-@property (nonatomic, strong) NSString *            contentType;
+@property (nonatomic, K_Strong) NSString *            filePath;
+@property (nonatomic, K_Strong) NSData *              fileData;
+@property (nonatomic, K_Strong) NSString *            fileName;
+@property (nonatomic, K_Strong) NSString *            contentType;
 @end
 @implementation FileParam
 @end
 
 @interface KMessage ()
 
-@property (nonatomic, strong) NSURL *               url;
+@property (nonatomic, K_Strong) NSURL *               url;
 @property (nonatomic, assign) NSTimeInterval        timeOutSeconds;
 @property (nonatomic, assign) KMessageStatus     status;
 
-@property (nonatomic, strong) NSMutableDictionary * inputData;
-@property (nonatomic, strong) NSMutableDictionary * inputFiles;
-@property (nonatomic, strong) NSMutableDictionary * outputData;
-@property (nonatomic, strong) NSMutableDictionary * requestHeaders;
+@property (nonatomic, K_Strong) NSMutableDictionary * inputData;
+@property (nonatomic, K_Strong) NSMutableDictionary * inputFiles;
+@property (nonatomic, K_Strong) NSMutableDictionary * outputData;
+@property (nonatomic, K_Strong) NSMutableDictionary * requestHeaders;
 
 @end
 
@@ -56,7 +55,7 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
     KMessage *message = [[KMessage alloc] init];
     message.url = [NSURL URLWithString:urlString];
     message.timeOutSeconds = timeOutSeconds;
-    return KAutoRelease(message);
+    return K_Auto_Release(message);
 }
 
 - (instancetype) init
@@ -76,16 +75,16 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
     self.url = nil;
     
     [self.inputData removeAllObjects];
-    KRelease(self.inputData);
+    K_Release(self.inputData);
     [self.inputFiles removeAllObjects];
-    KRelease(self.inputFiles);
+    K_Release(self.inputFiles);
     [self.outputData removeAllObjects];
-    KRelease(self.outputData);
+    K_Release(self.outputData);
     [self.requestHeaders removeAllObjects];
-    KRelease(self.requestHeaders);
+    K_Release(self.requestHeaders);
     
-    KRelease(_responseString);
-    KRelease(_error);
+    K_Release(_responseString);
+    K_Release(_error);
     
 #if !__has_feature(objc_arc)
     [super dealloc];
@@ -134,7 +133,7 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
         return self;
     };
     
-    return KAutoRelease([block copy]);
+    return K_Auto_Release([block copy]);
 }
 
 - (KMessageBlockFileIO) inputFile
@@ -159,12 +158,12 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
                 fp.contentType = contentType;
             }
             [self.inputFiles setObject:fp forKey:key];
-            KRelease(fp);
+            K_Release(fp);
         }
         return self;
     };
     
-    return KAutoRelease([block copy]);
+    return K_Auto_Release([block copy]);
 }
 
 - (KMessageBlockNormalIO) output
@@ -177,7 +176,7 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
         return self;
     };
     
-    return KAutoRelease([block copy]);
+    return K_Auto_Release([block copy]);
 }
 
 - (KMessageBlockNormalIO) header
@@ -190,7 +189,7 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
         }
         return self;
     };
-    return KAutoRelease([block copy]);
+    return K_Auto_Release([block copy]);
 }
 
 - (id) getInput:(NSString *)key
@@ -334,21 +333,21 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
     ASIFormDataRequest *requestRef = request;
     [request setCompletionBlock:^{
         _recvTimeStamp = [[NSDate date] timeIntervalSince1970];
-        _responseString = KCopy(requestRef.responseString);
+        _responseString = K_Copy(requestRef.responseString);
         KLog(@"url:%@", requestRef.url);
         KLog(@"success! response:%@", _responseString);
         self.status = KMessageStatusSuccessed;
     }];
     [request setFailedBlock:^{
         _recvTimeStamp = [[NSDate date] timeIntervalSince1970];
-        NSMutableDictionary *userInfo = KRetain([NSMutableDictionary dictionaryWithDictionary:requestRef.error.userInfo]);
+        NSMutableDictionary *userInfo = K_Retain([NSMutableDictionary dictionaryWithDictionary:requestRef.error.userInfo]);
         [userInfo setValue:requestRef.url forKey:@"Host"];
-        _error = KRetain([NSError errorWithDomain:requestRef.error.domain
+        _error = K_Retain([NSError errorWithDomain:requestRef.error.domain
                                                 code:requestRef.error.code
                                             userInfo:userInfo]);
         KLog(@"url:%@", requestRef.url);
         KLog(@"failed! error:%@", _error);
-        KRelease(userInfo);
+        K_Release(userInfo);
         self.status = KMessageStatusFailed;
     }];
     [request startAsynchronous];

@@ -12,6 +12,8 @@
 
 + (UIImage *) imageWithColor:(UIColor *)color size:(CGSize)size;
 
+- (UIImage *) resize:(CGSize)size;
+
 @end
 
 @interface UIImage (KExtension)

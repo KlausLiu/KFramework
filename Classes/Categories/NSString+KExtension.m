@@ -96,7 +96,7 @@
 {
     UIWebView *_wv = [[UIWebView alloc] init];
     NSString *_ret = [_wv stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"(function(){var _json=%@;return JSON.stringify(_json);})();", self]];
-    KRelease(_wv);
+    K_Release(_wv);
     return _ret;
 }
 

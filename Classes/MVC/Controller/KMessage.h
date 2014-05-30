@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KDefine.h"
 
 @class KMessage;
 
@@ -27,8 +28,8 @@ typedef KMessage *   (^KMessageBlockFileIO)(id key, id value, NSString *fileName
 
 + (instancetype) messageWithURLString:(NSString *)urlString timeOutSeconds:(NSTimeInterval)timeOutSeconds;
 
-@property (nonatomic, strong, readonly) NSString *                  urlString;
-@property (nonatomic, strong, readonly) NSDictionary *              parameters;
+@property (nonatomic, K_Strong, readonly) NSString *                  urlString;
+@property (nonatomic, K_Strong, readonly) NSDictionary *              parameters;
 
 @property (nonatomic, assign, readonly) BOOL                        sending;
 @property (nonatomic, assign) BOOL                                  succeed;

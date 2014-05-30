@@ -17,53 +17,77 @@
 
 #pragma mark - memmory
 
-#undef KWeek
-#if __has_feature(objc_arc_weak)
-#define KWeek __weak
-#else
-#define KWeek __unsafe_unretained
+#ifndef K_Strong
+    #if __has_feature(objc_arc)
+        #define K_Strong    strong
+    #else
+        #define K_Strong    retain
+    #endif
 #endif
 
-#undef KRelease
-#if __has_feature(objc_arc)
-    #define KRelease(__x)
-#else
-    #define KRelease(__x) [__x release]; __x = nil
+#ifndef K_Week
+    #if __has_feature(objc_arc_week)
+        #define K_Week  week
+    #elif __has_feature(objc_arc)
+        #define K_Week  unsafe_unretained
+    #else
+        #define K_Week  assign
+    #endif
 #endif
 
-#undef KAutoRelease
-#if __has_feature(objc_arc)
-    #define KAutoRelease(__x) __x
-#else
-    #define KAutoRelease(__x) [__x autorelease]
+#ifndef K__Week
+    #if __has_feature(objc_arc_weak)
+        #define K__Week __weak
+    #else
+        #define K__Week __unsafe_unretained
+    #endif
 #endif
 
-#undef KCopy
-#if __has_feature(objc_arc)
-    #define KCopy(__x) __x
-#else
-    #define KCopy(__x) [__x copy]
+#ifndef K_Release
+    #if __has_feature(objc_arc)
+        #define K_Release(__x)
+    #else
+        #define K_Release(__x) [__x release]; __x = nil
+    #endif
 #endif
 
-#undef KRetain
-#if __has_feature(objc_arc)
-    #define KRetain(__x) __x
-#else
-    #define KRetain(__x) [__x retain]
+#ifndef K_Auto_Release
+    #if __has_feature(objc_arc)
+        #define K_Auto_Release(__x) __x
+    #else
+        #define K_Auto_Release(__x) [__x autorelease]
+    #endif
 #endif
 
-#undef KDispatchQueueRelease
-#if __has_feature(objc_arc)
-// If OS_OBJECT_USE_OBJC=1, then the dispatch objects will be treated like ObjC objects
-// and will participate in ARC.
-// See the section on "Dispatch Queues and Automatic Reference Counting" in "Grand Central Dispatch (GCD) Reference" for details.
-#if OS_OBJECT_USE_OBJC
-#define KDispatchQueueRelease(__x)
-#else
-#define KDispatchQueueRelease(__x) (dispatch_release(__x));
+#ifndef K_Copy
+    #if __has_feature(objc_arc)
+        #define K_Copy(__x) __x
+    #else
+        #define K_Copy(__x) [__x copy]
+    #endif
 #endif
-#else
-#define KDispatchQueueRelease(__x) (dispatch_release(__x));
+
+#ifndef K_Retain
+    #if __has_feature(objc_arc)
+        #define K_Retain(__x) __x
+    #else
+        #define K_Retain(__x) [__x retain]
+    #endif
+#endif
+
+#ifndef K_Dispatch_Queue_Release
+    #if __has_feature(objc_arc)
+        // If OS_OBJECT_USE_OBJC=1, then the dispatch objects will be treated like ObjC objects
+        // and will participate in ARC.
+        // See the section on "Dispatch Queues and Automatic Reference Counting" in "Grand Central Dispatch (GCD) Reference" for details.
+        #if OS_OBJECT_USE_OBJC
+            #define K_Dispatch_Queue_Release(__x)
+        #else
+            #define K_Dispatch_Queue_Release(__x) (dispatch_release(__x));
+        #endif
+    #else
+        #define K_Dispatch_Queue_Release(__x) (dispatch_release(__x));
+    #endif
 #endif
 
 #pragma mark - math

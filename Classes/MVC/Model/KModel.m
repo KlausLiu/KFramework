@@ -11,7 +11,7 @@
 
 @interface KModel()<KMessageStatusChangeDelegate>
 
-@property (nonatomic, strong) NSMutableArray *messageArray;
+@property (nonatomic, K_Strong) NSMutableArray *messageArray;
 
 @property (nonatomic, assign) NSUInteger status_code;
 
@@ -24,9 +24,9 @@
 - (void) dealloc
 {
     [_observers removeAllObjects];
-    KRelease(_observers);
+    K_Release(_observers);
     [self.messageArray removeAllObjects];
-    KRelease(self.messageArray);
+    K_Release(self.messageArray);
     
 #if !__has_feature(objc_arc)
     [super dealloc];
@@ -89,7 +89,7 @@
         if (observer &&
             [observer respondsToSelector:@selector(handleMessage:)] &&
             self.status_code == _last_status_code) {
-            [observer handleMessage:KAutoRelease(KRetain(message))];
+            [observer handleMessage:K_Auto_Release(K_Retain(message))];
         }
     }
     
