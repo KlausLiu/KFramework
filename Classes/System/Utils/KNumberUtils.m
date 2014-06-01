@@ -30,12 +30,10 @@
     for (; from <= to; from ++) {
         [tmp addObject:@(from)];
     }
-    if (tmp.count <= count) {
-        return tmp;
-    }
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:count];
+    count = (count < tmp.count ? count : tmp.count);
     for (int i = 0; i < count; i ++) {
-        id obj = [tmp objectAtIndex:[self randomIntFromZeroTo:tmp.count]];
+        id obj = tmp[[self randomIntFromZeroTo:(tmp.count - 1)]];
         [result addObject:obj];
         [tmp removeObject:obj];
     }

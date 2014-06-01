@@ -10,6 +10,7 @@
 #import "KCategories.h"
 #import "KAPI.h"
 #import "ASIHTTPRequest.h"
+#import <KFramework/KNumberUtils.h>
 
 typedef void(^KBasicBlock)(void);
 
@@ -31,6 +32,8 @@ typedef void(^KBasicBlock)(void);
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSArray *set = [KNumberUtils randomIntsWithFrom:0 to:20 count:5];
+    NSLog(@"%@", set);
     
     return YES;
 }
