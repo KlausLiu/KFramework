@@ -10,6 +10,13 @@
 
 @interface KNumberUtils : NSObject
 
+#pragma mark - random
+
++ (int) randomIntWithFrom:(int)from
+                       to:(int)to;
+
+#pragma mark -
+
 + (BOOL) isInteger:(id)obj;
 
 + (BOOL) isLongLong:(id)obj;

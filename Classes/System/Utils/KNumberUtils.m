@@ -10,6 +10,12 @@
 
 @implementation KNumberUtils
 
++ (int) randomIntWithFrom:(int)from
+                       to:(int)to
+{
+    return (int)(from + (arc4random() % (to - from + 1)));
+}
+
 + (BOOL) isInteger:(id)obj
 {
     NSScanner *scanner = [NSScanner scannerWithString:[obj description]];
