@@ -12,8 +12,14 @@
 
 #pragma mark - random
 
++ (int) randomIntFromZeroTo:(int)to;
+
 + (int) randomIntWithFrom:(int)from
                        to:(int)to;
+
++ (NSArray *) randomIntsWithFrom:(int)from
+                              to:(int)to
+                           count:(int)count;
 
 #pragma mark -
 
