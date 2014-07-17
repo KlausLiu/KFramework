@@ -249,9 +249,6 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
 
 - (instancetype) send:(BOOL)async
 {
-//    [self performSelector:(async ? @selector(asyncSend) : @selector(syncSend))
-//               withObject:nil
-//               afterDelay:.1];
     dispatch_queue_t queue;
     if ([[NSThread currentThread] isMainThread]) {
         queue = dispatch_get_main_queue();
@@ -284,7 +281,9 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
     _status = status;
     if (self.messageStatusChangeDelegate &&
         [self.messageStatusChangeDelegate respondsToSelector:@selector(messageStatusChange:)]) {
-        [self.messageStatusChangeDelegate messageStatusChange:self];
+        [self.messageStatusChangeDelegate performSelectorOnMainThread:@selector(messageStatusChange:)
+                                                           withObject:self
+                                                        waitUntilDone:[NSThread isMainThread]];
     }
 }
 

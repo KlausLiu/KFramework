@@ -41,6 +41,20 @@
     return ret;
 }
 
+- (void) performBlock:(void (^)(void))block delay:(NSTimeInterval)delay
+{
+    block = [block copy];
+    [self performSelector:@selector(_doPerformBlock:)
+               withObject:block
+               afterDelay:delay];
+}
+
+- (void) _doPerformBlock:(void (^)(void))block
+{
+    block();
+    K_Release(block);
+}
+
 - (BOOL) is:(id)obj
 {
     return self == obj;

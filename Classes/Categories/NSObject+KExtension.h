@@ -13,6 +13,8 @@
 // 执行多参数的方法
 - (id) performSelector:(SEL)aSelector withArguments:(id)arg, ... NS_REQUIRES_NIL_TERMINATION;
 
+- (void) performBlock:(void (^)(void))block delay:(NSTimeInterval)delay;
+
 - (BOOL) is:(id)obj;
 
 @end
