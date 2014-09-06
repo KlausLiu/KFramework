@@ -15,6 +15,8 @@ Pod::Spec.new do |s|
   s.source           = { :git => "https://github.com/KlausLiu/KFramework.git", :tag => "0.0.2" }
 
   s.platform     = :ios
+  
+  s.ios.deployment_target = '5.0'
 
   s.subspec 'Base64' do |base64|
     base64.source_files = 'Classes/Vendor/Base64/*.{h,m}'
@@ -53,7 +55,7 @@ Pod::Spec.new do |s|
   s.subspec 'Core' do |core|
     core.source_files = 'Classes/*.{h,m,mm}', 'Classes/MVC/*.{h,m,mm}', 'Classes/MVC/**/*.{h,m,mm}', 'Classes/MVC/**/**/*.{h,m,mm}', 'Classes/MVC/**/**/**/*.{h,m,mm}', 'Classes/MVC/**/**/**/**/*.{h,m}', 'Classes/System/Utils/*.{h,m}'
     core.requires_arc = false
-    core.dependency 'ASIHTTPRequest'
+    core.dependency 'AFNetworking', '~> 1.3.4'
     core.dependency 'Reachability'
     core.dependency 'OpenUDID'
     core.dependency 'KFramework/Categories'

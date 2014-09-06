@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "KFramework"
-  s.version          = "0.0.5"
+  s.version          = "0.0.2"
   s.summary          = "Klaus Framework."
   s.description      = <<-DESC
                        MVC Framework.
@@ -11,10 +11,12 @@ Pod::Spec.new do |s|
                        DESC
   s.homepage         = "http://www.apblog.cn"
   s.license          = 'MIT'
-  s.author           = { "Klaus Liu" => "lpluck08@gmail.com" }
-  s.source           = { :git => "https://github.com/KlausLiu/KFramework.git", :tag => "0.0.1" }
+  s.author           = { "Klaus Liu" => "klaus_liu@163.com" }
+  s.source           = { :git => "https://github.com/KlausLiu/KFramework.git", :tag => "0.0.2" }
 
   s.platform     = :ios
+  
+  s.ios.deployment_target = '5.0'
 
   s.subspec 'Base64' do |base64|
     base64.source_files = 'Classes/Vendor/Base64/*.{h,m}'
@@ -37,13 +39,26 @@ Pod::Spec.new do |s|
     wvjb.requires_arc = false
   end
 
+  s.subspec 'Categories' do |c|
+    c.source_files = 'Classes/Categories/*.{h,m}', 'Classes/System/Utils/*.{h,m}', 'Classes/KDefine.h'
+    c.requires_arc = false
+    c.dependency 'KFramework/JSONKit'
+  end
+
+  s.subspec 'DB' do |db|
+    db.source_files = 'Classes/System/DB/*.{h,m}', 'Classes/KDefine.h', 'Classes/System/Utils/*.{h,m}'
+    db.requires_arc = false
+    db.dependency 'FMDB'
+    db.dependency 'KFramework/Categories'
+  end
+
   s.subspec 'Core' do |core|
-    core.source_files = 'Classes/*.{h,m,mm}', 'Classes/MVC/*.{h,m,mm}', 'Classes/MVC/**/*.{h,m,mm}', 'Classes/MVC/**/**/*.{h,m,mm}', 'Classes/MVC/**/**/**/*.{h,m,mm}', 'Classes/MVC/**/**/**/**/*.{h,m}', 'Classes/System/DB/*.{h,m}', 'Classes/System/Utils/*.{h,m}', 'Classes/Categories/*.{h,m}'
+    core.source_files = 'Classes/*.{h,m,mm}', 'Classes/MVC/*.{h,m,mm}', 'Classes/MVC/**/*.{h,m,mm}', 'Classes/MVC/**/**/*.{h,m,mm}', 'Classes/MVC/**/**/**/*.{h,m,mm}', 'Classes/MVC/**/**/**/**/*.{h,m}', 'Classes/System/Utils/*.{h,m}'
     core.requires_arc = false
-    core.dependency 'ASIHTTPRequest'
+    core.dependency 'AFNetworking', '~> 1.3.4'
     core.dependency 'Reachability'
-    core.dependency 'FMDB'
     core.dependency 'OpenUDID'
+    core.dependency 'KFramework/Categories'
     core.dependency 'KFramework/JSONKit'
     core.dependency 'KFramework/Base64'
   end

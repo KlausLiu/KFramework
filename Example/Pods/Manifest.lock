@@ -1,23 +1,11 @@
 PODS:
-  - ASIHTTPRequest (1.8.2):
-    - ASIHTTPRequest/ASIWebPageRequest
-    - ASIHTTPRequest/CloudFiles
-    - ASIHTTPRequest/Core
-    - ASIHTTPRequest/S3
-  - ASIHTTPRequest/ASIWebPageRequest (1.8.2):
-    - ASIHTTPRequest/Core
-  - ASIHTTPRequest/CloudFiles (1.8.2):
-    - ASIHTTPRequest/Core
-  - ASIHTTPRequest/Core (1.8.2):
-    - Reachability
-  - ASIHTTPRequest/S3 (1.8.2):
-    - ASIHTTPRequest/Core
+  - AFNetworking (1.3.4)
   - FMDB (2.3):
     - FMDB/standard
   - FMDB/common (2.3)
   - FMDB/standard (2.3):
     - FMDB/common
-  - KFramework (0.0.1):
+  - KFramework (0.0.2):
     - KFramework/Base64
     - KFramework/Categories
     - KFramework/Core
@@ -25,22 +13,22 @@ PODS:
     - KFramework/IdentifierAddition
     - KFramework/JSONKit
     - KFramework/WebViewJavascriptBridge
-  - KFramework/Base64 (0.0.1)
-  - KFramework/Categories (0.0.1):
+  - KFramework/Base64 (0.0.2)
+  - KFramework/Categories (0.0.2):
     - KFramework/JSONKit
-  - KFramework/Core (0.0.1):
-    - ASIHTTPRequest
+  - KFramework/Core (0.0.2):
+    - AFNetworking (~> 1.3.4)
     - KFramework/Base64
     - KFramework/Categories
     - KFramework/JSONKit
     - OpenUDID
     - Reachability
-  - KFramework/DB (0.0.1):
+  - KFramework/DB (0.0.2):
     - FMDB
     - KFramework/Categories
-  - KFramework/IdentifierAddition (0.0.1)
-  - KFramework/JSONKit (0.0.1)
-  - KFramework/WebViewJavascriptBridge (0.0.1)
+  - KFramework/IdentifierAddition (0.0.2)
+  - KFramework/JSONKit (0.0.2)
+  - KFramework/WebViewJavascriptBridge (0.0.2)
   - OpenUDID (1.0.0)
   - Reachability (3.1.1)
 
@@ -52,10 +40,10 @@ EXTERNAL SOURCES:
     :path: ../KFramework.podspec
 
 SPEC CHECKSUMS:
-  ASIHTTPRequest: 2c8335b49410c0e2ad42829c438e74d454b77590
+  AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
   FMDB: 31ec26773c7f7b7890a6038235a1f2bbd933a7cb
-  KFramework: 0466a7a194ebdd91028b83b62b337eeca464af51
+  KFramework: 82a0ecbbaf3bcf8375162560721ba4dc69c3d053
   OpenUDID: 5a23b7477755efc2d7871b57aa79ba3089c40b74
   Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
 
-COCOAPODS: 0.32.1
+COCOAPODS: 0.33.1

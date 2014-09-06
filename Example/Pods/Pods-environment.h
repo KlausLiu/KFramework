@@ -6,35 +6,11 @@
 // project.
 
 
-// ASIHTTPRequest
-#define COCOAPODS_POD_AVAILABLE_ASIHTTPRequest
-#define COCOAPODS_VERSION_MAJOR_ASIHTTPRequest 1
-#define COCOAPODS_VERSION_MINOR_ASIHTTPRequest 8
-#define COCOAPODS_VERSION_PATCH_ASIHTTPRequest 2
-
-// ASIHTTPRequest/ASIWebPageRequest
-#define COCOAPODS_POD_AVAILABLE_ASIHTTPRequest_ASIWebPageRequest
-#define COCOAPODS_VERSION_MAJOR_ASIHTTPRequest_ASIWebPageRequest 1
-#define COCOAPODS_VERSION_MINOR_ASIHTTPRequest_ASIWebPageRequest 8
-#define COCOAPODS_VERSION_PATCH_ASIHTTPRequest_ASIWebPageRequest 2
-
-// ASIHTTPRequest/CloudFiles
-#define COCOAPODS_POD_AVAILABLE_ASIHTTPRequest_CloudFiles
-#define COCOAPODS_VERSION_MAJOR_ASIHTTPRequest_CloudFiles 1
-#define COCOAPODS_VERSION_MINOR_ASIHTTPRequest_CloudFiles 8
-#define COCOAPODS_VERSION_PATCH_ASIHTTPRequest_CloudFiles 2
-
-// ASIHTTPRequest/Core
-#define COCOAPODS_POD_AVAILABLE_ASIHTTPRequest_Core
-#define COCOAPODS_VERSION_MAJOR_ASIHTTPRequest_Core 1
-#define COCOAPODS_VERSION_MINOR_ASIHTTPRequest_Core 8
-#define COCOAPODS_VERSION_PATCH_ASIHTTPRequest_Core 2
-
-// ASIHTTPRequest/S3
-#define COCOAPODS_POD_AVAILABLE_ASIHTTPRequest_S3
-#define COCOAPODS_VERSION_MAJOR_ASIHTTPRequest_S3 1
-#define COCOAPODS_VERSION_MINOR_ASIHTTPRequest_S3 8
-#define COCOAPODS_VERSION_PATCH_ASIHTTPRequest_S3 2
+// AFNetworking
+#define COCOAPODS_POD_AVAILABLE_AFNetworking
+#define COCOAPODS_VERSION_MAJOR_AFNetworking 1
+#define COCOAPODS_VERSION_MINOR_AFNetworking 3
+#define COCOAPODS_VERSION_PATCH_AFNetworking 4
 
 // FMDB
 #define COCOAPODS_POD_AVAILABLE_FMDB
@@ -58,49 +34,49 @@
 #define COCOAPODS_POD_AVAILABLE_KFramework
 #define COCOAPODS_VERSION_MAJOR_KFramework 0
 #define COCOAPODS_VERSION_MINOR_KFramework 0
-#define COCOAPODS_VERSION_PATCH_KFramework 1
+#define COCOAPODS_VERSION_PATCH_KFramework 2
 
 // KFramework/Base64
 #define COCOAPODS_POD_AVAILABLE_KFramework_Base64
 #define COCOAPODS_VERSION_MAJOR_KFramework_Base64 0
 #define COCOAPODS_VERSION_MINOR_KFramework_Base64 0
-#define COCOAPODS_VERSION_PATCH_KFramework_Base64 1
+#define COCOAPODS_VERSION_PATCH_KFramework_Base64 2
 
 // KFramework/Categories
 #define COCOAPODS_POD_AVAILABLE_KFramework_Categories
 #define COCOAPODS_VERSION_MAJOR_KFramework_Categories 0
 #define COCOAPODS_VERSION_MINOR_KFramework_Categories 0
-#define COCOAPODS_VERSION_PATCH_KFramework_Categories 1
+#define COCOAPODS_VERSION_PATCH_KFramework_Categories 2
 
 // KFramework/Core
 #define COCOAPODS_POD_AVAILABLE_KFramework_Core
 #define COCOAPODS_VERSION_MAJOR_KFramework_Core 0
 #define COCOAPODS_VERSION_MINOR_KFramework_Core 0
-#define COCOAPODS_VERSION_PATCH_KFramework_Core 1
+#define COCOAPODS_VERSION_PATCH_KFramework_Core 2
 
 // KFramework/DB
 #define COCOAPODS_POD_AVAILABLE_KFramework_DB
 #define COCOAPODS_VERSION_MAJOR_KFramework_DB 0
 #define COCOAPODS_VERSION_MINOR_KFramework_DB 0
-#define COCOAPODS_VERSION_PATCH_KFramework_DB 1
+#define COCOAPODS_VERSION_PATCH_KFramework_DB 2
 
 // KFramework/IdentifierAddition
 #define COCOAPODS_POD_AVAILABLE_KFramework_IdentifierAddition
 #define COCOAPODS_VERSION_MAJOR_KFramework_IdentifierAddition 0
 #define COCOAPODS_VERSION_MINOR_KFramework_IdentifierAddition 0
-#define COCOAPODS_VERSION_PATCH_KFramework_IdentifierAddition 1
+#define COCOAPODS_VERSION_PATCH_KFramework_IdentifierAddition 2
 
 // KFramework/JSONKit
 #define COCOAPODS_POD_AVAILABLE_KFramework_JSONKit
 #define COCOAPODS_VERSION_MAJOR_KFramework_JSONKit 0
 #define COCOAPODS_VERSION_MINOR_KFramework_JSONKit 0
-#define COCOAPODS_VERSION_PATCH_KFramework_JSONKit 1
+#define COCOAPODS_VERSION_PATCH_KFramework_JSONKit 2
 
 // KFramework/WebViewJavascriptBridge
 #define COCOAPODS_POD_AVAILABLE_KFramework_WebViewJavascriptBridge
 #define COCOAPODS_VERSION_MAJOR_KFramework_WebViewJavascriptBridge 0
 #define COCOAPODS_VERSION_MINOR_KFramework_WebViewJavascriptBridge 0
-#define COCOAPODS_VERSION_PATCH_KFramework_WebViewJavascriptBridge 1
+#define COCOAPODS_VERSION_PATCH_KFramework_WebViewJavascriptBridge 2
 
 // OpenUDID
 #define COCOAPODS_POD_AVAILABLE_OpenUDID

@@ -7,8 +7,8 @@
 //
 
 #import "KMessage.h"
-#import "ASIFormDataRequest.h"
-#import "KCategories.h"
+#import "AFNetworking.h"
+#import "AFJSONRequestOperation.h"
 
 #define CORP_MESSAGE_TIME_OUT_SECONDS_DEFAULT    (30)
 
@@ -293,6 +293,36 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
     if (self.inputData) {
         KLog(@"http request parameters:%@", self.inputData);
     }
+    __weak __typeof(&*self) selfRef = self;
+    AFHTTPClient *client= [[AFHTTPClient alloc] initWithBaseURL:nil];
+    [client registerHTTPOperationClass:[AFURLConnectionOperation class]];
+    [client setDefaultHeader:@"Accept" value:@"application/json"];
+    for (NSString *key in self.requestHeaders.allKeys) {
+        [client setDefaultHeader:key
+                           value:[self.requestHeaders objectForKey:key]];
+    }
+    [client postPath:self.url parameters:self.inputData success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        _recvTimeStamp = [[NSDate date] timeIntervalSince1970];
+        _responseString = K_Copy(operation.responseString);
+        KLog(@"url:%@", selfRef.url);
+        KLog(@"success! response:%@", _responseString);
+        selfRef.status = KMessageStatusSuccessed;
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        _recvTimeStamp = [[NSDate date] timeIntervalSince1970];
+        NSMutableDictionary *userInfo = K_Retain([NSMutableDictionary dictionaryWithDictionary:error.userInfo]);
+        [userInfo setValue:selfRef.url forKey:@"Host"];
+        _error = K_Retain([NSError errorWithDomain:error.domain
+                                              code:error.code
+                                          userInfo:userInfo]);
+        KLog(@"url:%@", selfRef.url);
+        KLog(@"failed! error:%@", _error);
+        K_Release(userInfo);
+        selfRef.status = KMessageStatusFailed;
+    }];
+    _sendTimeStamp = [[NSDate date] timeIntervalSince1970];
+    self.status = KMessageStatusSending;
+    /*
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:self.url];
     for (id key in self.inputData.allKeys) {
         id value = [self.inputData objectForKey:key];
@@ -350,8 +380,7 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
         self.status = KMessageStatusFailed;
     }];
     [request startAsynchronous];
-    _sendTimeStamp = [[NSDate date] timeIntervalSince1970];
-    self.status = KMessageStatusSending;
+     */
 }
 
 - (void) syncSend
