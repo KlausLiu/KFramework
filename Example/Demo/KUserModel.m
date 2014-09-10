@@ -24,7 +24,8 @@ DEF_SINGLETEN(KUserModel)
                :(NSString *)password
 {
     [super message:KAPI.user_signin]
-    .input(@"json", @"{\"name\":\"dzchang\",\"password\":\"1111111\"}");
+    .header(@"Content-Type", @"application/json")
+    .input(@"PhoneNumber", @"15921755334");
 }
 
 - (void) upload:(NSString *)filePath

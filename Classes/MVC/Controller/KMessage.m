@@ -7,8 +7,6 @@
 //
 
 #import "KMessage.h"
-#import "AFNetworking.h"
-#import "AFJSONRequestOperation.h"
 
 #define CORP_MESSAGE_TIME_OUT_SECONDS_DEFAULT    (30)
 
@@ -294,14 +292,14 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
         KLog(@"http request parameters:%@", self.inputData);
     }
     __weak __typeof(&*self) selfRef = self;
-    AFHTTPClient *client= [[AFHTTPClient alloc] initWithBaseURL:nil];
+    AFHTTPClient *client= [[AFHTTPClient alloc] initWithBaseURL:self.url];
+    [client setParameterEncoding:self.parameterEncoding];
     [client registerHTTPOperationClass:[AFURLConnectionOperation class]];
-    [client setDefaultHeader:@"Accept" value:@"application/json"];
     for (NSString *key in self.requestHeaders.allKeys) {
         [client setDefaultHeader:key
                            value:[self.requestHeaders objectForKey:key]];
     }
-    [client postPath:self.url parameters:self.inputData success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [client postPath:self.url.absoluteString parameters:self.inputData success:^(AFHTTPRequestOperation *operation, id responseObject) {
         _recvTimeStamp = [[NSDate date] timeIntervalSince1970];
         _responseString = K_Copy(operation.responseString);
         KLog(@"url:%@", selfRef.url);

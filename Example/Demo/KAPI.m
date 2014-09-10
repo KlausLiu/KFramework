@@ -25,7 +25,7 @@ KDB_Table_Name(t_abc)
 
 @implementation KAPI
 
-DEF_API(user_signin, @"http://www.ttjm.net/tt/?url=user/signin")
+DEF_API(user_signin, @"http://27.115.8.166:83/api/sms/newCode")
 
 DEF_API(upload, @"http://192.168.1.138:8080/clmj-app-server/admin/upload!doUpload.action")
 

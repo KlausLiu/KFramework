@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "KDefine.h"
+#import "AFNetworking.h"
 
 @class KMessage;
 
@@ -28,18 +29,19 @@ typedef KMessage *   (^KMessageBlockFileIO)(id key, id value, NSString *fileName
 
 + (instancetype) messageWithURLString:(NSString *)urlString timeOutSeconds:(NSTimeInterval)timeOutSeconds;
 
-@property (nonatomic, K_Strong, readonly) NSString *                  urlString;
-@property (nonatomic, K_Strong, readonly) NSDictionary *              parameters;
+@property (nonatomic, K_Strong, readonly) NSString                      *                  urlString;
+@property (nonatomic, K_Strong, readonly) NSDictionary                  *              parameters;
 
-@property (nonatomic, assign, readonly) BOOL                        sending;
-@property (nonatomic, assign) BOOL                                  succeed;
-@property (nonatomic, assign) BOOL                                  failed;
-@property (nonatomic, assign, readonly) BOOL                        finished;
-@property (nonatomic, assign, readonly) BOOL                        cancelled;
-@property (nonatomic, assign) id<KMessageStatusChangeDelegate>   messageStatusChangeDelegate;
+@property (nonatomic, assign, readonly  ) BOOL                          sending;
+@property (nonatomic, assign            ) BOOL                          succeed;
+@property (nonatomic, assign            ) BOOL                          failed;
+@property (nonatomic, assign, readonly  ) BOOL                          finished;
+@property (nonatomic, assign, readonly  ) BOOL                          cancelled;
+@property (nonatomic, assign            ) id<KMessageStatusChangeDelegate > messageStatusChangeDelegate;
 
-@property (nonatomic, assign, readonly) NSTimeInterval              sendTimeStamp;
-@property (nonatomic, assign, readonly) NSTimeInterval              recvTimeStamp;
+@property (nonatomic, assign, readonly  ) NSTimeInterval                sendTimeStamp;
+@property (nonatomic, assign, readonly  ) NSTimeInterval                recvTimeStamp;
+@property (nonatomic, assign            ) AFHTTPClientParameterEncoding parameterEncoding;
 
 - (NSTimeInterval) timeConsuming;
 

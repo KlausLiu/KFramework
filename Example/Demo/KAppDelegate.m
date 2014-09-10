@@ -9,7 +9,6 @@
 #import "KAppDelegate.h"
 #import "KCategories.h"
 #import "KAPI.h"
-#import "ASIHTTPRequest.h"
 #import <KFramework/KNumberUtils.h>
 
 typedef void(^KBasicBlock)(void);
