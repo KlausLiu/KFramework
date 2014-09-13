@@ -60,7 +60,7 @@ typedef KMessage *   (^KMessageBlockFileIO)(id key, id value, NSString *fileName
 
 - (instancetype) send:(BOOL)async;
 
-@property (nonatomic, assign, readonly) NSString *                  responseString;
-@property (nonatomic, retain, readonly) NSError *                   error;
+@property (nonatomic, K_Strong, readonly) NSString *                  responseString;
+@property (nonatomic, K_Strong, readonly) NSError *                   error;
 
 @end

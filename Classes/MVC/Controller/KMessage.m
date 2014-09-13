@@ -60,10 +60,10 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
 {
     self = [super init];
     if (self) {
-        self.inputData = [NSMutableDictionary dictionary];
-        self.inputFiles = [NSMutableDictionary dictionary];
-        self.outputData = [NSMutableDictionary dictionary];
-        self.requestHeaders = [NSMutableDictionary dictionary];
+        self.inputData = [[NSMutableDictionary alloc] init];
+        self.inputFiles = [[NSMutableDictionary alloc] init];
+        self.outputData = [[NSMutableDictionary alloc] init];
+        self.requestHeaders = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -291,7 +291,6 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
     if (self.inputData) {
         KLog(@"http request parameters:%@", self.inputData);
     }
-    __weak __typeof(&*self) selfRef = self;
     AFHTTPClient *client= [[AFHTTPClient alloc] initWithBaseURL:self.url];
     [client setParameterEncoding:self.parameterEncoding];
     [client registerHTTPOperationClass:[AFURLConnectionOperation class]];
@@ -302,82 +301,83 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
     [client postPath:self.url.absoluteString parameters:self.inputData success:^(AFHTTPRequestOperation *operation, id responseObject) {
         _recvTimeStamp = [[NSDate date] timeIntervalSince1970];
         _responseString = K_Copy(operation.responseString);
-        KLog(@"url:%@", selfRef.url);
+        KLog(@"url:%@", self.url);
         KLog(@"success! response:%@", _responseString);
-        selfRef.status = KMessageStatusSuccessed;
+        self.status = KMessageStatusSuccessed;
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         _recvTimeStamp = [[NSDate date] timeIntervalSince1970];
         NSMutableDictionary *userInfo = K_Retain([NSMutableDictionary dictionaryWithDictionary:error.userInfo]);
-        [userInfo setValue:selfRef.url forKey:@"Host"];
+        [userInfo setValue:self.url forKey:@"Host"];
         _error = K_Retain([NSError errorWithDomain:error.domain
                                               code:error.code
                                           userInfo:userInfo]);
-        KLog(@"url:%@", selfRef.url);
-        KLog(@"failed! error:%@", _error);
-        K_Release(userInfo);
-        selfRef.status = KMessageStatusFailed;
-    }];
-    _sendTimeStamp = [[NSDate date] timeIntervalSince1970];
-    self.status = KMessageStatusSending;
-    /*
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:self.url];
-    for (id key in self.inputData.allKeys) {
-        id value = [self.inputData objectForKey:key];
-        if ([value isKindOfClass:[NSMutableArray class]]) {
-            for (id v in ((NSArray *)value)) {
-                [request addPostValue:v
-                               forKey:key];
-            }
-        } else {
-            [request setPostValue:[self.inputData objectForKey:key]
-                           forKey:key];
-        }
-    }
-    for (id key in self.inputFiles.allKeys) {
-        FileParam *fp = [self.inputFiles objectForKey:key];
-        if (fp.fileData) {
-            [request addData:fp.fileData
-                withFileName:fp.fileName
-              andContentType:fp.contentType
-                      forKey:key];
-        } else if (fp.filePath) {
-            [request addFile:fp.filePath
-                withFileName:fp.fileName
-              andContentType:fp.contentType
-                      forKey:key];
-        }
-    }
-    for (NSString *key in self.requestHeaders.allKeys) {
-        [request addRequestHeader:key
-                            value:[self.requestHeaders objectForKey:key]];
-    }
-    request.timeOutSeconds = self.timeOutSeconds;
-    [request setRequestMethod:@"POST"];
-    [request setResponseEncoding:NSUTF8StringEncoding];
-    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
-    [request setShouldAttemptPersistentConnection:NO];
-    ASIFormDataRequest *requestRef = request;
-    [request setCompletionBlock:^{
-        _recvTimeStamp = [[NSDate date] timeIntervalSince1970];
-        _responseString = K_Copy(requestRef.responseString);
-        KLog(@"url:%@", requestRef.url);
-        KLog(@"success! response:%@", _responseString);
-        self.status = KMessageStatusSuccessed;
-    }];
-    [request setFailedBlock:^{
-        _recvTimeStamp = [[NSDate date] timeIntervalSince1970];
-        NSMutableDictionary *userInfo = K_Retain([NSMutableDictionary dictionaryWithDictionary:requestRef.error.userInfo]);
-        [userInfo setValue:requestRef.url forKey:@"Host"];
-        _error = K_Retain([NSError errorWithDomain:requestRef.error.domain
-                                                code:requestRef.error.code
-                                            userInfo:userInfo]);
-        KLog(@"url:%@", requestRef.url);
+        KLog(@"url:%@", self.url);
         KLog(@"failed! error:%@", _error);
         K_Release(userInfo);
         self.status = KMessageStatusFailed;
     }];
-    [request startAsynchronous];
+    K_Release(client);
+    _sendTimeStamp = [[NSDate date] timeIntervalSince1970];
+    self.status = KMessageStatusSending;
+    /*
+     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:self.url];
+     for (id key in self.inputData.allKeys) {
+     id value = [self.inputData objectForKey:key];
+     if ([value isKindOfClass:[NSMutableArray class]]) {
+     for (id v in ((NSArray *)value)) {
+     [request addPostValue:v
+     forKey:key];
+     }
+     } else {
+     [request setPostValue:[self.inputData objectForKey:key]
+     forKey:key];
+     }
+     }
+     for (id key in self.inputFiles.allKeys) {
+     FileParam *fp = [self.inputFiles objectForKey:key];
+     if (fp.fileData) {
+     [request addData:fp.fileData
+     withFileName:fp.fileName
+     andContentType:fp.contentType
+     forKey:key];
+     } else if (fp.filePath) {
+     [request addFile:fp.filePath
+     withFileName:fp.fileName
+     andContentType:fp.contentType
+     forKey:key];
+     }
+     }
+     for (NSString *key in self.requestHeaders.allKeys) {
+     [request addRequestHeader:key
+     value:[self.requestHeaders objectForKey:key]];
+     }
+     request.timeOutSeconds = self.timeOutSeconds;
+     [request setRequestMethod:@"POST"];
+     [request setResponseEncoding:NSUTF8StringEncoding];
+     [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+     [request setShouldAttemptPersistentConnection:NO];
+     ASIFormDataRequest *requestRef = request;
+     [request setCompletionBlock:^{
+     _recvTimeStamp = [[NSDate date] timeIntervalSince1970];
+     _responseString = K_Copy(requestRef.responseString);
+     KLog(@"url:%@", requestRef.url);
+     KLog(@"success! response:%@", _responseString);
+     self.status = KMessageStatusSuccessed;
+     }];
+     [request setFailedBlock:^{
+     _recvTimeStamp = [[NSDate date] timeIntervalSince1970];
+     NSMutableDictionary *userInfo = K_Retain([NSMutableDictionary dictionaryWithDictionary:requestRef.error.userInfo]);
+     [userInfo setValue:requestRef.url forKey:@"Host"];
+     _error = K_Retain([NSError errorWithDomain:requestRef.error.domain
+     code:requestRef.error.code
+     userInfo:userInfo]);
+     KLog(@"url:%@", requestRef.url);
+     KLog(@"failed! error:%@", _error);
+     K_Release(userInfo);
+     self.status = KMessageStatusFailed;
+     }];
+     [request startAsynchronous];
      */
 }
 

@@ -87,9 +87,16 @@
     int _last_status_code = self.status_code;
     for (id<KModelObserver> observer in _observers) {
         if (observer &&
-            [observer respondsToSelector:@selector(handleMessage:)] &&
             self.status_code == _last_status_code) {
-            [observer handleMessage:K_Auto_Release(K_Retain(message))];
+            if (!message.failed &&
+                [observer respondsToSelector:@selector(preHandleMessage:)] &&
+                ![observer preHandleMessage:K_Auto_Release(K_Retain(message))]) {
+                message.failed = YES;
+                return;
+            }
+            if ([observer respondsToSelector:@selector(handleMessage:)]) {
+                [observer handleMessage:K_Auto_Release(K_Retain(message))];
+            }
         }
     }
     
