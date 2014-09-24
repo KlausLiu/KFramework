@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "KFramework"
-  s.version          = "0.0.4"
+  s.version          = "0.0.5"
   s.summary          = "Klaus Framework."
   s.description      = <<-DESC
                        MVC Framework.
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.homepage         = "http://www.apblog.cn"
   s.license          = 'MIT'
   s.author           = { "Klaus Liu" => "klaus_liu@163.com" }
-  s.source           = { :git => "https://github.com/KlausLiu/KFramework.git", :tag => "0.0.4" }
+  s.source           = { :git => "https://github.com/KlausLiu/KFramework.git", :tag => "0.0.5" }
 
   s.platform     = :ios
   
