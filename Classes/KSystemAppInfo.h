@@ -14,12 +14,12 @@
 #define K_System_App_Info
 
 
-//#define DEVICE_SYSTEM_VERSION_GT( __version )     ( [[[UIDevice currentDevice] systemVersion] compare:__version] != NSOrderedAscending )
+#define DEVICE_SYSTEM_VERSION_GT( __version )     ( [[[UIDevice currentDevice] systemVersion] compare:__version] != NSOrderedAscending )
 
-#define IOS7_OR_LATER		(floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_7_0)
-#define IOS6_OR_LATER		(floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_6_0)
-#define IOS5_OR_LATER		(floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_5_0)
-#define IOS4_OR_LATER		(floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_4_0)
+#define IOS7_OR_LATER		( DEVICE_SYSTEM_VERSION_GT( @"7.0" ) )
+#define IOS6_OR_LATER		( DEVICE_SYSTEM_VERSION_GT( @"6.0" ) )
+#define IOS5_OR_LATER		( DEVICE_SYSTEM_VERSION_GT( @"5.0" ) )
+#define IOS4_OR_LATER		( DEVICE_SYSTEM_VERSION_GT( @"4.0" ) )
 
 #define IOS7_OR_EARLIER		( !IOS8_OR_LATER )
 #define IOS6_OR_EARLIER		( !IOS7_OR_LATER )
