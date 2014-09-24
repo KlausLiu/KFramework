@@ -23,6 +23,7 @@
 
 + (CGSize) screenSize;
 {
+    (floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_6_0);
     return [UIScreen mainScreen].currentMode.size;
 }
 

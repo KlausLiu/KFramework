@@ -14,12 +14,12 @@
 #define K_System_App_Info
 
 
-#define DEVICE_SYSTEM_VERSION_GT( __version )     ( [[[UIDevice currentDevice] systemVersion] compare:__version] != NSOrderedAscending )
+//#define DEVICE_SYSTEM_VERSION_GT( __version )     ( [[[UIDevice currentDevice] systemVersion] compare:__version] != NSOrderedAscending )
 
-#define IOS7_OR_LATER		( DEVICE_SYSTEM_VERSION_GT( @"7.0" ) )
-#define IOS6_OR_LATER		( DEVICE_SYSTEM_VERSION_GT( @"6.0" ) )
-#define IOS5_OR_LATER		( DEVICE_SYSTEM_VERSION_GT( @"5.0" ) )
-#define IOS4_OR_LATER		( DEVICE_SYSTEM_VERSION_GT( @"4.0" ) )
+#define IOS7_OR_LATER		(floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_7_0)
+#define IOS6_OR_LATER		(floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_6_0)
+#define IOS5_OR_LATER		(floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_5_0)
+#define IOS4_OR_LATER		(floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_4_0)
 
 #define IOS7_OR_EARLIER		( !IOS8_OR_LATER )
 #define IOS6_OR_EARLIER		( !IOS7_OR_LATER )
@@ -29,11 +29,13 @@
 // 是否为指定大小屏幕
 #define K_Device_Is_Screen_Size(__width, __height) ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(__width, __height), [[UIScreen mainScreen] currentMode].size) : NO)
 
-#define K_Is_iPhone_4inch        K_Device_Is_Screen_Size(640, 1136)
+#define K_Is_iPhone_5_5inch      (K_Device_Is_Screen_Size(1242, 2208) || K_Device_Is_Screen_Size(2208, 1242))
+#define K_Is_iPhone_4_7inch      (K_Device_Is_Screen_Size(750, 1334) || K_Device_Is_Screen_Size(1334, 750))
+#define K_Is_iPhone_4inch        (K_Device_Is_Screen_Size(640, 1136) || K_Device_Is_Screen_Size(1136, 640))
 #define K_Is_iPhone_Non_Retina   K_Device_Is_Screen_Size(320, 640)
 #define K_Is_iPhone_Retina       K_Device_Is_Screen_Size(640, 960)
-#define K_Is_iPad_Non_Retina     K_Device_Is_Screen_Size(768, 1024)
-#define K_Is_iPad_Retina         K_Device_Is_Screen_Size(1536, 2048)
+#define K_Is_iPad_Non_Retina     (K_Device_Is_Screen_Size(768, 1024) || K_Device_Is_Screen_Size(1024, 768))
+#define K_Is_iPad_Retina         (K_Device_Is_Screen_Size(1536, 2048) || K_Device_Is_Screen_Size(2048, 1536))
 
 
 #endif
