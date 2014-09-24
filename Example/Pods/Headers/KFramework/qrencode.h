@@ -1,0 +1,1 @@
+../../../../Classes/Vendor/libqrencode/qrencode.h

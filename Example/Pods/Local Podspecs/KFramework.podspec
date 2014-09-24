@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "KFramework"
-  s.version          = "0.0.2"
+  s.version          = "0.0.3"
   s.summary          = "Klaus Framework."
   s.description      = <<-DESC
                        MVC Framework.
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.homepage         = "http://www.apblog.cn"
   s.license          = 'MIT'
   s.author           = { "Klaus Liu" => "klaus_liu@163.com" }
-  s.source           = { :git => "https://github.com/KlausLiu/KFramework.git", :tag => "0.0.2" }
+  s.source           = { :git => "https://github.com/KlausLiu/KFramework.git", :tag => "0.0.3" }
 
   s.platform     = :ios
   
@@ -39,6 +39,11 @@ Pod::Spec.new do |s|
     wvjb.requires_arc = false
   end
 
+  s.subspec 'libqrencode' do |qrencode|
+    qrencode.source_files = 'Classes/Vendor/libqrencode/*.{h,m,c}'
+    qrencode.requires_arc = false
+  end
+
   s.subspec 'Categories' do |c|
     c.source_files = 'Classes/Categories/*.{h,m}', 'Classes/System/Utils/*.{h,m}', 'Classes/KDefine.h'
     c.requires_arc = false
@@ -61,6 +66,7 @@ Pod::Spec.new do |s|
     core.dependency 'KFramework/Categories'
     core.dependency 'KFramework/JSONKit'
     core.dependency 'KFramework/Base64'
+    core.dependency 'KFramework/libqrencode'
   end
 
 end
