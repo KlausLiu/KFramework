@@ -1,1 +1,0 @@
-../../../../Classes/Vendor/libqrencode/QRCodeGenerator.h

@@ -1,1 +1,0 @@
-../../../../Classes/Vendor/WebViewJavascriptBridge/KWebViewJavascriptBridge.h

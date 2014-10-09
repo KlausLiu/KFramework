@@ -1,1 +1,0 @@
-../../../../Classes/Vendor/libqrencode/qrspec.h
