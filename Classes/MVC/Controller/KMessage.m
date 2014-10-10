@@ -285,27 +285,67 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
     }
 }
 
+- (void) _doUpload
+{
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:self.url];
+    NSMutableURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST"
+                                                                         path:self.url.absoluteString
+                                                                   parameters:nil
+                                                    constructingBodyWithBlock: ^(id <AFMultipartFormData>formData)
+                                    {
+                                        
+                                        for (id key in self.inputFiles.allKeys) {
+                                            FileParam *fp = [self.inputFiles objectForKey:key];
+                                            if (fp.fileData) {
+                                                [formData appendPartWithFileData:fp.fileData
+                                                                            name:key
+                                                                        fileName:fp.fileName
+                                                                        mimeType:fp.contentType];
+                                            } else if (fp.filePath) {
+                                                [formData appendPartWithFileURL:[NSURL fileURLWithPath:fp.filePath]
+                                                                           name:key
+                                                                       fileName:fp.fileName
+                                                                       mimeType:fp.contentType
+                                                                          error:nil];
+                                            }
+                                        }
+                                    }];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        NSLog(@"Sent %lld of %lld bytes", totalBytesWritten, totalBytesExpectedToWrite);
+    }];
+    
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+    }
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                         
+                                     }];
+    [httpClient enqueueHTTPRequestOperation:operation];
+}
+
 - (void) asyncSend
 {
     KLog(@"http request url:%@", self.url);
     if (self.inputData) {
         KLog(@"http request parameters:%@", self.inputData);
     }
-    AFHTTPClient *client= [[AFHTTPClient alloc] initWithBaseURL:self.url];
-    [client setParameterEncoding:self.parameterEncoding];
-    [client registerHTTPOperationClass:[AFURLConnectionOperation class]];
-    for (NSString *key in self.requestHeaders.allKeys) {
-        [client setDefaultHeader:key
-                           value:[self.requestHeaders objectForKey:key]];
+    BOOL upload = NO;
+    if (self.inputFiles.count > 0) {
+        upload = YES;
     }
-    [client postPath:self.url.absoluteString parameters:self.inputData success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    void (^success)(AFHTTPRequestOperation *operation, id responseObject) = ^(AFHTTPRequestOperation *operation, id responseObject) {
         _recvTimeStamp = [[NSDate date] timeIntervalSince1970];
         _responseString = K_Copy(operation.responseString);
         KLog(@"url:%@", self.url);
         KLog(@"success! response:%@", _responseString);
         self.status = KMessageStatusSuccessed;
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    };
+    
+    void (^failure)(AFHTTPRequestOperation *operation, NSError *error) = ^(AFHTTPRequestOperation *operation, NSError *error) {
         _recvTimeStamp = [[NSDate date] timeIntervalSince1970];
         NSMutableDictionary *userInfo = K_Retain([NSMutableDictionary dictionaryWithDictionary:error.userInfo]);
         [userInfo setValue:self.url forKey:@"Host"];
@@ -316,7 +356,50 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
         KLog(@"failed! error:%@", _error);
         K_Release(userInfo);
         self.status = KMessageStatusFailed;
-    }];
+    };
+    
+    AFHTTPClient *client= [[AFHTTPClient alloc] initWithBaseURL:self.url];
+    [client setParameterEncoding:self.parameterEncoding];
+    for (NSString *key in self.requestHeaders.allKeys) {
+        [client setDefaultHeader:key
+                           value:[self.requestHeaders objectForKey:key]];
+    }
+    if (upload) {
+        NSMutableURLRequest *request = [client multipartFormRequestWithMethod:@"POST"
+                                                                         path:self.url.absoluteString
+                                                                   parameters:nil
+                                                    constructingBodyWithBlock: ^(id <AFMultipartFormData>formData) {
+                                                        for (id key in self.inputFiles.allKeys) {
+                                                            FileParam *fp = [self.inputFiles objectForKey:key];
+                                                            if (fp.fileData) {
+                                                                [formData appendPartWithFileData:fp.fileData
+                                                                                            name:key
+                                                                                        fileName:fp.fileName
+                                                                                        mimeType:fp.contentType];
+                                                            } else if (fp.filePath) {
+                                                                [formData appendPartWithFileURL:[NSURL fileURLWithPath:fp.filePath]
+                                                                                           name:key
+                                                                                       fileName:fp.fileName
+                                                                                       mimeType:fp.contentType
+                                                                                          error:nil];
+                                                            }
+                                                        }
+                                                    }];
+        
+        AFHTTPRequestOperation *operation = K_Auto_Release([[AFHTTPRequestOperation alloc] initWithRequest:request]);
+//        [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+//            NSLog(@"Sent %lld of %lld bytes", totalBytesWritten, totalBytesExpectedToWrite);
+//        }];
+        [operation setCompletionBlockWithSuccess:success
+                                         failure:failure];
+        [client enqueueHTTPRequestOperation:operation];
+    } else {
+        [client registerHTTPOperationClass:[AFURLConnectionOperation class]];
+        [client postPath:self.url.absoluteString
+              parameters:self.inputData
+                 success:success
+                 failure:failure];
+    }
     K_Release(client);
     _sendTimeStamp = [[NSDate date] timeIntervalSince1970];
     self.status = KMessageStatusSending;
