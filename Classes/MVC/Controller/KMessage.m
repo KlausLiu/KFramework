@@ -359,7 +359,6 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
     };
     
     AFHTTPClient *client= [[AFHTTPClient alloc] initWithBaseURL:self.url];
-    [client setParameterEncoding:self.parameterEncoding];
     for (NSString *key in self.requestHeaders.allKeys) {
         [client setDefaultHeader:key
                            value:[self.requestHeaders objectForKey:key]];
@@ -367,7 +366,7 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
     if (upload) {
         NSMutableURLRequest *request = [client multipartFormRequestWithMethod:@"POST"
                                                                          path:self.url.absoluteString
-                                                                   parameters:nil
+                                                                   parameters:self.inputData
                                                     constructingBodyWithBlock: ^(id <AFMultipartFormData>formData) {
                                                         for (id key in self.inputFiles.allKeys) {
                                                             FileParam *fp = [self.inputFiles objectForKey:key];
@@ -394,6 +393,7 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
                                          failure:failure];
         [client enqueueHTTPRequestOperation:operation];
     } else {
+        [client setParameterEncoding:self.parameterEncoding];
         [client registerHTTPOperationClass:[AFURLConnectionOperation class]];
         [client postPath:self.url.absoluteString
               parameters:self.inputData
