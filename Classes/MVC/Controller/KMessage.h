@@ -43,6 +43,8 @@ typedef KMessage *   (^KMessageBlockFileIO)(id key, id value, NSString *fileName
 @property (nonatomic, assign, readonly  ) NSTimeInterval                recvTimeStamp;
 @property (nonatomic, assign            ) AFHTTPClientParameterEncoding parameterEncoding;
 
+@property (nonatomic, assign)             NSInteger responseStatusCode;
+
 - (NSTimeInterval) timeConsuming;
 
 - (KMessageBlockNormalIO) input;

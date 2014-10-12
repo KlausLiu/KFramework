@@ -341,8 +341,8 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
         _responseString = K_Copy(operation.responseString);
         KLog(@"url:%@", self.url);
         KLog(@"success! response:%@", _responseString);
+        self.responseStatusCode = operation.response.statusCode;
         self.status = KMessageStatusSuccessed;
-        
     };
     
     void (^failure)(AFHTTPRequestOperation *operation, NSError *error) = ^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -355,6 +355,7 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
         KLog(@"url:%@", self.url);
         KLog(@"failed! error:%@", _error);
         K_Release(userInfo);
+        self.responseStatusCode = operation.response.statusCode;
         self.status = KMessageStatusFailed;
     };
     
@@ -386,9 +387,9 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
                                                     }];
         
         AFHTTPRequestOperation *operation = K_Auto_Release([[AFHTTPRequestOperation alloc] initWithRequest:request]);
-//        [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
-//            NSLog(@"Sent %lld of %lld bytes", totalBytesWritten, totalBytesExpectedToWrite);
-//        }];
+        //        [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        //            NSLog(@"Sent %lld of %lld bytes", totalBytesWritten, totalBytesExpectedToWrite);
+        //        }];
         [operation setCompletionBlockWithSuccess:success
                                          failure:failure];
         [client enqueueHTTPRequestOperation:operation];
