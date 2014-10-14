@@ -48,6 +48,7 @@ Pod::Spec.new do |s|
     c.source_files = 'Classes/Categories/*.{h,m}', 'Classes/System/Utils/*.{h,m}', 'Classes/KDefine.h'
     c.requires_arc = false
     c.dependency 'KFramework/JSONKit'
+    c.frameworks = 'UIKit', 'CoreGraphics'
   end
 
   s.subspec 'DB' do |db|
@@ -59,6 +60,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Core' do |core|
     core.source_files = 'Classes/*.{h,m,mm}', 'Classes/MVC/*.{h,m,mm}', 'Classes/MVC/**/*.{h,m,mm}', 'Classes/MVC/**/**/*.{h,m,mm}', 'Classes/MVC/**/**/**/*.{h,m,mm}', 'Classes/MVC/**/**/**/**/*.{h,m}', 'Classes/System/Utils/*.{h,m}'
+    core.frameworks = 'UIKit', 'CoreGraphics'
     core.requires_arc = false
     core.dependency 'AFNetworking', '~> 1.3.4'
     core.dependency 'Reachability'

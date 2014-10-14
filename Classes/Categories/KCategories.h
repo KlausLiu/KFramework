@@ -16,5 +16,6 @@
 #import "UIImage+KExtension.h"
 #import "NSArray+KExtension.h"
 #import "UIViewController+KExtension.h"
+#import "UIImageView+KExtension.h"
 
 #endif
