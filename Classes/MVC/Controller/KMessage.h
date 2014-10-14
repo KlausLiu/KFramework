@@ -43,6 +43,8 @@ typedef KMessage *   (^KMessageBlockFileIO)(id key, id value, NSString *fileName
 @property (nonatomic, assign, readonly  ) NSTimeInterval                recvTimeStamp;
 @property (nonatomic, assign            ) AFHTTPClientParameterEncoding parameterEncoding;
 
+@property (nonatomic, assign)             NSInteger responseStatusCode;
+
 - (NSTimeInterval) timeConsuming;
 
 - (KMessageBlockNormalIO) input;
@@ -62,5 +64,10 @@ typedef KMessage *   (^KMessageBlockFileIO)(id key, id value, NSString *fileName
 
 @property (nonatomic, K_Strong, readonly) NSString *                  responseString;
 @property (nonatomic, K_Strong, readonly) NSError *                   error;
+
+/**
+ *  标识为失败，不调用外部处理
+ */
+- (void) markFailedWithoutHandle;
 
 @end

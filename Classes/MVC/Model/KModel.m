@@ -88,11 +88,9 @@
     for (id<KModelObserver> observer in _observers) {
         if (observer &&
             self.status_code == _last_status_code) {
-            if (!message.failed &&
-                [observer respondsToSelector:@selector(preHandleMessage:)] &&
+            if ([observer respondsToSelector:@selector(preHandleMessage:)] &&
                 ![observer preHandleMessage:K_Auto_Release(K_Retain(message))]) {
-                message.failed = YES;
-                return;
+                [message markFailedWithoutHandle];
             }
             if ([observer respondsToSelector:@selector(handleMessage:)]) {
                 [observer handleMessage:K_Auto_Release(K_Retain(message))];

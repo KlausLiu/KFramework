@@ -230,6 +230,14 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
     self.status = KMessageStatusFailed;
 }
 
+/**
+ *  标识为失败，不调用外部处理
+ */
+- (void) markFailedWithoutHandle
+{
+    _status = KMessageStatusFailed;
+}
+
 - (BOOL) finished
 {
     return self.status == KMessageStatusFailed || self.status == KMessageStatusSuccessed;
@@ -341,8 +349,8 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
         _responseString = K_Copy(operation.responseString);
         KLog(@"url:%@", self.url);
         KLog(@"success! response:%@", _responseString);
+        self.responseStatusCode = operation.response.statusCode;
         self.status = KMessageStatusSuccessed;
-        
     };
     
     void (^failure)(AFHTTPRequestOperation *operation, NSError *error) = ^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -355,11 +363,11 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
         KLog(@"url:%@", self.url);
         KLog(@"failed! error:%@", _error);
         K_Release(userInfo);
+        self.responseStatusCode = operation.response.statusCode;
         self.status = KMessageStatusFailed;
     };
     
     AFHTTPClient *client= [[AFHTTPClient alloc] initWithBaseURL:self.url];
-    [client setParameterEncoding:self.parameterEncoding];
     for (NSString *key in self.requestHeaders.allKeys) {
         [client setDefaultHeader:key
                            value:[self.requestHeaders objectForKey:key]];
@@ -367,7 +375,7 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
     if (upload) {
         NSMutableURLRequest *request = [client multipartFormRequestWithMethod:@"POST"
                                                                          path:self.url.absoluteString
-                                                                   parameters:nil
+                                                                   parameters:self.inputData
                                                     constructingBodyWithBlock: ^(id <AFMultipartFormData>formData) {
                                                         for (id key in self.inputFiles.allKeys) {
                                                             FileParam *fp = [self.inputFiles objectForKey:key];
@@ -387,13 +395,14 @@ typedef NS_ENUM(NSInteger, KMessageStatus) {
                                                     }];
         
         AFHTTPRequestOperation *operation = K_Auto_Release([[AFHTTPRequestOperation alloc] initWithRequest:request]);
-//        [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
-//            NSLog(@"Sent %lld of %lld bytes", totalBytesWritten, totalBytesExpectedToWrite);
-//        }];
+        //        [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        //            NSLog(@"Sent %lld of %lld bytes", totalBytesWritten, totalBytesExpectedToWrite);
+        //        }];
         [operation setCompletionBlockWithSuccess:success
                                          failure:failure];
         [client enqueueHTTPRequestOperation:operation];
     } else {
+        [client setParameterEncoding:self.parameterEncoding];
         [client registerHTTPOperationClass:[AFURLConnectionOperation class]];
         [client postPath:self.url.absoluteString
               parameters:self.inputData
